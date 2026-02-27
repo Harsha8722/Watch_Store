@@ -14,15 +14,15 @@ public class EmailServiceImpl implements EmailService {
 
     private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
 
-    private final JavaMailSender mailSender;
-
-    @Autowired
-    public EmailServiceImpl(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
+    @Autowired(required = false)
+    private JavaMailSender mailSender;
 
     @Override
     public void sendOrderConfirmation(String email, Order order) {
+        if (mailSender == null) {
+            log.info("Email service not configured. Skipping confirmation email to: {}", email);
+            return;
+        }
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(email);

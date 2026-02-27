@@ -60,6 +60,11 @@ public class Order {
     public List<OrderItem> getOrderItems() { return orderItems; }
     public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
 
+    public java.util.Date getOrderDateAsDate() {
+        if (orderDate == null) return null;
+        return java.sql.Timestamp.valueOf(orderDate);
+    }
+
     public enum OrderStatus {
         PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED
     }

@@ -32,10 +32,27 @@ public class WishlistController {
         return "user/wishlist";
     }
 
+    // Supports both GET (from product cards with plain links) and POST (from forms)
+    @GetMapping("/add/{watchId}")
+    public String addToWishlistGet(@PathVariable Long watchId,
+                                   @AuthenticationPrincipal UserDetails userDetails,
+                                   RedirectAttributes redirectAttributes) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+        User user = getUser(userDetails);
+        wishlistService.addToWishlist(user, watchId);
+        redirectAttributes.addFlashAttribute("success", "Added to wishlist!");
+        return "redirect:/watches/" + watchId;
+    }
+
     @PostMapping("/add/{watchId}")
     public String addToWishlist(@PathVariable Long watchId,
                                 @AuthenticationPrincipal UserDetails userDetails,
                                 RedirectAttributes redirectAttributes) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
         User user = getUser(userDetails);
         wishlistService.addToWishlist(user, watchId);
         redirectAttributes.addFlashAttribute("success", "Added to wishlist!");

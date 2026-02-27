@@ -5,15 +5,22 @@
             <html lang="en" data-theme="dark">
 
             <head>
+                <script>
+                    const theme = localStorage.getItem('adminTheme') || 'dark';
+                    document.documentElement.setAttribute('data-admin-theme', theme);
+                    document.documentElement.setAttribute('data-theme', theme);
+                </script>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Manage Products - Admin</title>
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
                 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap"
                     rel="stylesheet">
                 <link href="/static/css/style.css" rel="stylesheet">
                 <link href="/static/css/admin.css" rel="stylesheet">
+                <link rel="icon" href="/favicon.svg" type="image/svg+xml">
             </head>
 
             <body class="admin-body">
@@ -39,6 +46,10 @@
                         <div class="topbar-title">Manage Products</div>
                         <button class="btn btn-gold btn-sm" data-bs-toggle="modal" data-bs-target="#productModal"><i
                                 class="fas fa-plus me-2"></i>Add Product</button>
+                        <button class="admin-theme-toggle" id="adminThemeBtn" onclick="toggleAdminTheme()">
+                            <i class="fas fa-moon" id="adminThemeIcon"></i>
+                            <span id="adminThemeLabel">Light Mode</span>
+                        </button>
                     </div>
 
                     <div class="admin-content">
@@ -121,8 +132,17 @@
                                                     <td>${watch.discount}%</td>
                                                     <td>${watch.stock}</td>
                                                     <td>
-                                                        <button class="btn btn-sm btn-outline-gold me-1"
-                                                            onclick="editProduct(${watch.id},'${watch.brand}','${watch.model}','${watch.price}','${watch.discount}','${watch.category}','${watch.stock}','${watch.description}','${watch.imageUrl}')">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-outline-gold me-1 edit-product-btn"
+                                                            data-id="${watch.id}"
+                                                            data-brand="<c:out value='${watch.brand}' escapeXml='true'/>"
+                                                            data-model="<c:out value='${watch.model}' escapeXml='true'/>"
+                                                            data-price="${watch.price}"
+                                                            data-discount="${watch.discount}"
+                                                            data-category="<c:out value='${watch.category}' escapeXml='true'/>"
+                                                            data-stock="${watch.stock}"
+                                                            data-description="<c:out value='${watch.description}' escapeXml='true'/>"
+                                                            data-imageurl="<c:out value='${watch.imageUrl}' escapeXml='true'/>">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
                                                         <form action="/admin/products/delete/${watch.id}" method="post"
@@ -254,19 +274,41 @@
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
-                    function editProduct(id, brand, model, price, discount, category, stock, desc, imageUrl) {
-                        document.getElementById('productModalTitle').textContent = 'Edit Watch';
-                        document.getElementById('productId').value = id;
-                        document.getElementById('pBrand').value = brand;
-                        document.getElementById('pModel').value = model;
-                        document.getElementById('pPrice').value = price;
-                        document.getElementById('pDiscount').value = discount;
-                        document.getElementById('pCategory').value = category;
-                        document.getElementById('pStock').value = stock;
-                        document.getElementById('pDesc').value = desc || '';
-                        document.getElementById('pImageUrl').value = imageUrl || '';
-                        new bootstrap.Modal(document.getElementById('productModal')).show();
+                    // Admin Theme Toggle
+                    const THEME_KEY = 'adminTheme';
+                    function applyAdminTheme(theme) {
+                        document.documentElement.setAttribute('data-admin-theme', theme);
+                        document.documentElement.setAttribute('data-theme', theme);
+                        const icon = document.getElementById('adminThemeIcon');
+                        const label = document.getElementById('adminThemeLabel');
+                        if (theme === 'light') { icon.className = 'fas fa-moon'; label.textContent = 'Dark Mode'; }
+                        else { icon.className = 'fas fa-sun'; label.textContent = 'Light Mode'; }
                     }
+                    function toggleAdminTheme() {
+                        const next = (document.documentElement.getAttribute('data-admin-theme') || 'dark') === 'dark' ? 'light' : 'dark';
+                        localStorage.setItem(THEME_KEY, next); applyAdminTheme(next);
+                    }
+                    (function () { applyAdminTheme(localStorage.getItem(THEME_KEY) || 'dark'); })();
+
+                    // Attach event listener for edit buttons
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const editButtons = document.querySelectorAll('.edit-product-btn');
+                        editButtons.forEach(button => {
+                            button.addEventListener('click', function () {
+                                document.getElementById('productModalTitle').textContent = 'Edit Watch';
+                                document.getElementById('productId').value = this.dataset.id;
+                                document.getElementById('pBrand').value = this.dataset.brand;
+                                document.getElementById('pModel').value = this.dataset.model;
+                                document.getElementById('pPrice').value = this.dataset.price;
+                                document.getElementById('pDiscount').value = this.dataset.discount;
+                                document.getElementById('pCategory').value = this.dataset.category;
+                                document.getElementById('pStock').value = this.dataset.stock;
+                                document.getElementById('pDesc').value = this.dataset.description || '';
+                                document.getElementById('pImageUrl').value = this.dataset.imageurl || '';
+                                new bootstrap.Modal(document.getElementById('productModal')).show();
+                            });
+                        });
+                    });
                     // Open modal directly if action=add in URL
                     if (window.location.search.includes('action=add')) {
                         new bootstrap.Modal(document.getElementById('productModal')).show();

@@ -59,13 +59,13 @@ public class SecurityConfig {
         http
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(auth -> auth
-                .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.FORWARD, jakarta.servlet.DispatcherType.ERROR).permitAll()
+                .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.FORWARD, jakarta.servlet.DispatcherType.ERROR, jakarta.servlet.DispatcherType.INCLUDE).permitAll()
                 .requestMatchers("/", "/watches", "/watches/**", "/api/**",
                         "/register", "/login", "/static/**", "/uploads/**",
                         "/error", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**", "/cart/**", "/orders/**",
-                        "/checkout/**", "/wishlist/**", "/reviews/**").hasRole("USER")
+                .requestMatchers("/user/profile/**", "/cart/**", "/orders/**",
+                        "/checkout/**", "/wishlist/**", "/reviews/**").authenticated()
                 .anyRequest().authenticated()
             )
 

@@ -2,7 +2,7 @@
     <%@ taglib prefix="c" uri="jakarta.tags.core" %>
         <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
             <!DOCTYPE html>
-            <html lang="en" data-theme="dark">
+            <html lang="en">
 
             <head>
                 <meta charset="UTF-8">
@@ -14,10 +14,11 @@
                     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
                     rel="stylesheet">
                 <link href="/static/css/style.css" rel="stylesheet">
+                <link rel="icon" href="/favicon.svg" type="image/svg+xml">
             </head>
 
             <body class="auth-body">
-                <div class="auth-container">
+                <div class="auth-container" id="authContainer">
                     <div class="auth-card">
                         <div class="auth-logo">
                             <a href="/" class="luxury-brand"><i class="fas fa-crown me-2"></i>WatchStore</a>
@@ -37,25 +38,39 @@
                         </c:if>
 
                         <form action="/login" method="post" class="auth-form">
-                            <div class="form-floating mb-3">
+                            <!-- Email Field -->
+                            <div class="auth-field mb-3">
+                                <label class="auth-field-label" for="email">
+                                    <i class="fas fa-envelope"></i> Email Address
+                                </label>
                                 <input type="email" class="form-control luxury-input" id="email" name="email"
-                                    placeholder="Email" required>
-                                <label for="email"><i class="fas fa-envelope me-2"></i>Email Address</label>
+                                    placeholder="Enter your email" required>
                             </div>
-                            <div class="form-floating mb-3 position-relative">
-                                <input type="password" class="form-control luxury-input" id="password" name="password"
-                                    placeholder="Password" required>
-                                <label for="password"><i class="fas fa-lock me-2"></i>Password</label>
-                                <button type="button" class="pwd-toggle" onclick="togglePwd('password')">
-                                    <i class="fas fa-eye" id="pwdEye"></i>
-                                </button>
+
+                            <!-- Password Field -->
+                            <div class="auth-field mb-3">
+                                <label class="auth-field-label" for="password">
+                                    <i class="fas fa-lock"></i> Password
+                                </label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control luxury-input" id="password"
+                                        name="password" placeholder="Enter your password" required>
+                                    <button type="button" class="pwd-toggle" onclick="togglePwd('password', 'pwdEye')">
+                                        <i class="fas fa-eye" id="pwdEye"></i>
+                                    </button>
+                                </div>
                             </div>
+
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="remember">
-                                    <label class="form-check-label" for="remember">Remember me</label>
+                                    <label class="form-check-label" for="remember" style="font-size:0.85rem;">Remember
+                                        me</label>
                                 </div>
+                                <a href="/forgot-password" class="gold-text text-decoration-none"
+                                    style="font-size: 0.85rem;">Forgot Password?</a>
                             </div>
+
                             <button type="submit" class="btn btn-gold w-100 btn-lg auth-btn">
                                 <i class="fas fa-sign-in-alt me-2"></i>Sign In
                             </button>
@@ -63,24 +78,38 @@
 
                         <div class="auth-divider"><span>OR</span></div>
                         <div class="auth-links">
-                            <p>Don't have an account? <a href="/register" class="gold-text">Create Account</a></p>
+                            <p>Don't have an account? <a href="/register" class="gold-text" id="registerLink">Create
+                                    Account</a></p>
                         </div>
 
-                        <div class="demo-credentials mt-3 p-3">
-                            <small class="text-muted">
-                                <strong>Demo Admin:</strong> admin@watchstore.com / admin123<br>
-                                <strong>Demo User:</strong> user@watchstore.com / user123
-                            </small>
-                        </div>
+
                     </div>
                 </div>
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
-                    function togglePwd(id) {
+                    function togglePwd(id, eyeId) {
                         const inp = document.getElementById(id);
-                        inp.type = inp.type === 'password' ? 'text' : 'password';
+                        const eye = document.getElementById(eyeId);
+                        if (inp.type === 'password') {
+                            inp.type = 'text';
+                            eye.classList.replace('fa-eye', 'fa-eye-slash');
+                        } else {
+                            inp.type = 'password';
+                            eye.classList.replace('fa-eye-slash', 'fa-eye');
+                        }
                     }
+
+                    // Page transition on link click
+                    document.getElementById('registerLink').addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const container = document.getElementById('authContainer');
+                        const href = this.href;
+                        container.classList.add('page-exit');
+                        setTimeout(function () {
+                            window.location.href = href;
+                        }, 350);
+                    });
                 </script>
             </body>
 

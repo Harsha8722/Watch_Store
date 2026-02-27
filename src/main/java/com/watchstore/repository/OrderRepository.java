@@ -18,6 +18,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByUserOrderByOrderDateDesc(User user);
     Page<Order> findAll(Pageable pageable);
 
+    @Query("SELECT o FROM Order o LEFT JOIN FETCH o.orderItems oi LEFT JOIN FETCH oi.watch WHERE o.id = :id")
+    java.util.Optional<Order> findByIdWithItems(@Param("id") Long id);
+
     @Query("SELECT COALESCE(SUM(o.totalAmount), 0) FROM Order o WHERE o.status != 'CANCELLED'")
     BigDecimal getTotalRevenue();
 

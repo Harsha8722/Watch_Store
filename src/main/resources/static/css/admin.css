@@ -1,17 +1,62 @@
-/* Admin Panel CSS */
+/* =========================================
+   Admin Panel CSS - Dark / Light Mode
+   ========================================= */
+
+/* ── CSS Variables ── */
+:root,
+[data-admin-theme="dark"] {
+    --adm-bg: #0f0f0f;
+    --adm-sidebar: #111111;
+    --adm-card: #1c1c1c;
+    --adm-card-alt: #252525;
+    --adm-topbar: #111111;
+    --adm-border: #2a2a2a;
+    --adm-text: #e8e8e8;
+    --adm-text-muted: rgba(255, 255, 255, 0.55);
+    --adm-th-text: rgba(255, 255, 255, 0.6);
+    --adm-link: rgba(255, 255, 255, 0.65);
+    --adm-input-bg: #252525;
+    --adm-input-text: #e8e8e8;
+    --adm-hover-row: rgba(198, 167, 94, 0.04);
+    --adm-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    --adm-toggle-bg: #252525;
+    --adm-toggle-text: rgba(255, 255, 255, 0.75);
+}
+
+[data-admin-theme="light"] {
+    --adm-bg: #f4f5f7;
+    --adm-sidebar: #ffffff;
+    --adm-card: #ffffff;
+    --adm-card-alt: #f8f9fa;
+    --adm-topbar: #ffffff;
+    --adm-border: #e5e7eb;
+    --adm-text: #1a1a2e;
+    --adm-text-muted: #6b7280;
+    --adm-th-text: #6b7280;
+    --adm-link: #374151;
+    --adm-input-bg: #f9fafb;
+    --adm-input-text: #1a1a2e;
+    --adm-hover-row: rgba(198, 167, 94, 0.05);
+    --adm-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --adm-toggle-bg: #f3f4f6;
+    --adm-toggle-text: #374151;
+}
+
+/* ── Base ── */
 .admin-body {
     display: flex;
     min-height: 100vh;
-    background: #0f0f0f;
-    color: #e8e8e8;
+    background: var(--adm-bg);
+    color: var(--adm-text);
     font-family: 'Inter', sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Sidebar */
+/* ── Sidebar ── */
 .admin-sidebar {
     width: 240px;
-    background: #111111;
-    border-right: 1px solid #2a2a2a;
+    background: var(--adm-sidebar);
+    border-right: 1px solid var(--adm-border);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -33,7 +78,8 @@
     font-size: 1.1rem;
     font-weight: 700;
     color: #C6A75E;
-    border-bottom: 1px solid #2a2a2a;
+    border-bottom: 1px solid var(--adm-border);
+    letter-spacing: 0.5px;
 }
 
 .sidebar-nav {
@@ -47,7 +93,7 @@
     align-items: center;
     gap: 12px;
     padding: 12px 20px;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--adm-link);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
@@ -66,7 +112,7 @@
 .sidebar-link:hover,
 .sidebar-link.active {
     color: #C6A75E;
-    background: rgba(198, 167, 94, 0.08);
+    background: rgba(198, 167, 94, 0.1);
 }
 
 .sidebar-link.active {
@@ -74,7 +120,7 @@
 }
 
 .sidebar-divider {
-    border-color: #2a2a2a;
+    border-color: var(--adm-border);
     margin: 8px 20px;
 }
 
@@ -87,7 +133,7 @@
     color: #e53e3e !important;
 }
 
-/* Main Content */
+/* ── Main Content ── */
 .admin-main {
     flex: 1;
     margin-left: 240px;
@@ -97,23 +143,24 @@
     min-height: 100vh;
 }
 
-/* Topbar */
+/* ── Topbar ── */
 .admin-topbar {
-    background: #111111;
-    border-bottom: 1px solid #2a2a2a;
-    padding: 16px 24px;
+    background: var(--adm-topbar);
+    border-bottom: 1px solid var(--adm-border);
+    padding: 14px 24px;
     display: flex;
     align-items: center;
     gap: 16px;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .sidebar-toggle {
     background: transparent;
-    border: 1px solid #2a2a2a;
-    color: #aaa;
+    border: 1px solid var(--adm-border);
+    color: var(--adm-text-muted);
     border-radius: 8px;
     padding: 6px 10px;
     cursor: pointer;
@@ -127,8 +174,9 @@
 
 .topbar-title {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     flex: 1;
+    color: var(--adm-text);
 }
 
 .topbar-actions {
@@ -137,16 +185,51 @@
     gap: 12px;
 }
 
-/* Content Area */
+/* ── Theme Toggle Button ── */
+.admin-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--adm-toggle-bg);
+    border: 1px solid var(--adm-border);
+    color: var(--adm-toggle-text);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+
+.admin-theme-toggle:hover {
+    border-color: #C6A75E;
+    color: #C6A75E;
+    background: rgba(198, 167, 94, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(198, 167, 94, 0.15);
+}
+
+.admin-theme-toggle i {
+    font-size: 0.85rem;
+    transition: transform 0.4s ease;
+}
+
+.admin-theme-toggle:hover i {
+    transform: rotate(20deg);
+}
+
+/* ── Content Area ── */
 .admin-content {
     padding: 24px;
     flex: 1;
 }
 
-/* Stat Cards */
+/* ── Stat Cards ── */
 .stat-card {
-    background: #1c1c1c;
-    border: 1px solid #2a2a2a;
+    background: var(--adm-card);
+    border: 1px solid var(--adm-border);
     border-radius: 16px;
     padding: 1.5rem;
     display: flex;
@@ -158,7 +241,7 @@
 .stat-card:hover {
     border-color: #C6A75E;
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--adm-shadow);
 }
 
 .stat-icon {
@@ -169,6 +252,18 @@
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
+}
+
+.stat-label {
+    color: var(--adm-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--adm-text);
 }
 
 .stat-users .stat-icon {
@@ -191,22 +286,18 @@
     color: #48bb78;
 }
 
-.stat-info h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin: 0;
+.bg-gold-subtle {
+    background: rgba(197, 168, 90, 0.15);
 }
 
-.stat-info p {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.85rem;
-    margin: 0;
+.text-gold {
+    color: #C6A75E;
 }
 
-/* Admin Cards */
+/* ── Admin Cards ── */
 .admin-card {
-    background: #1c1c1c;
-    border: 1px solid #2a2a2a;
+    background: var(--adm-card);
+    border: 1px solid var(--adm-border);
     border-radius: 16px;
     overflow: hidden;
     margin-bottom: 24px;
@@ -214,49 +305,51 @@
 
 .admin-card-header {
     padding: 16px 20px;
-    border-bottom: 1px solid #2a2a2a;
+    border-bottom: 1px solid var(--adm-border);
 }
 
 .admin-card-header h5 {
     margin: 0;
     font-weight: 600;
+    color: var(--adm-text);
 }
 
 .admin-card-body {
     padding: 20px;
 }
 
-/* Admin Table */
+/* ── Admin Table ── */
 .admin-table {
-    color: #e8e8e8;
+    color: var(--adm-text);
     margin: 0;
 }
 
 .admin-table thead th {
-    background: #252525;
-    border-color: #2a2a2a;
+    background: var(--adm-card-alt);
+    border-color: var(--adm-border);
     font-weight: 600;
-    font-size: 0.8rem;
-    letter-spacing: 0.5px;
+    font-size: 0.78rem;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--adm-th-text);
     padding: 12px 16px;
 }
 
 .admin-table td {
-    border-color: #2a2a2a;
+    border-color: var(--adm-border);
     padding: 12px 16px;
     vertical-align: middle;
+    color: var(--adm-text);
 }
 
 .admin-table tbody tr:hover {
-    background: rgba(198, 167, 94, 0.03);
+    background: var(--adm-hover-row);
 }
 
 .table-img-placeholder {
     width: 50px;
     height: 50px;
-    background: #252525;
+    background: var(--adm-card-alt);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -264,15 +357,15 @@
     color: #C6A75E;
 }
 
-/* Quick Action Buttons */
+/* ── Quick Action Buttons ── */
 .quick-action-btn {
     display: flex;
     align-items: center;
     padding: 12px 16px;
-    background: #252525;
-    border: 1px solid #2a2a2a;
+    background: var(--adm-card-alt);
+    border: 1px solid var(--adm-border);
     border-radius: 10px;
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--adm-link);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
@@ -285,7 +378,7 @@
     background: rgba(198, 167, 94, 0.06);
 }
 
-/* Admin badges */
+/* ── Badges ── */
 .badge-category {
     background: rgba(198, 167, 94, 0.15);
     color: #C6A75E;
@@ -296,30 +389,36 @@
     color: #4299e1;
 }
 
-/* Admin Modal */
+/* ── Admin Modal ── */
 .admin-modal {
-    background: #1c1c1c;
-    border: 1px solid #2a2a2a;
-    color: #e8e8e8;
+    background: var(--adm-card);
+    border: 1px solid var(--adm-border);
+    color: var(--adm-text);
 }
 
 .admin-modal .modal-header {
-    border-bottom-color: #2a2a2a;
+    border-bottom-color: var(--adm-border);
 }
 
 .luxury-input-dark {
-    background: #252525 !important;
-    border: 1px solid #2a2a2a !important;
-    color: #e8e8e8 !important;
+    background: var(--adm-input-bg) !important;
+    border: 1px solid var(--adm-border) !important;
+    color: var(--adm-input-text) !important;
     border-radius: 10px !important;
 }
 
 .luxury-input-dark:focus {
     border-color: #C6A75E !important;
     box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.15) !important;
+    background: var(--adm-card) !important;
+    color: var(--adm-input-text) !important;
 }
 
-/* User Avatar */
+.luxury-input-dark::placeholder {
+    color: var(--adm-text-muted) !important;
+}
+
+/* ── User Avatar ── */
 .user-avatar-sm {
     width: 32px;
     height: 32px;
@@ -331,9 +430,10 @@
     color: #111;
     font-weight: 700;
     font-size: 0.85rem;
+    flex-shrink: 0;
 }
 
-/* Responsive Admin */
+/* ── Responsive Admin ── */
 @media (max-width: 768px) {
     .admin-sidebar {
         width: 0;

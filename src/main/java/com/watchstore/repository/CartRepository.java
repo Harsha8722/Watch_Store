@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByUser(User user);
-    Optional<Cart> findByUserAndWatch(User user, Watch watch);
+    Optional<Cart> findFirstByUserAndWatch(User user, Watch watch);
     void deleteByUser(User user);
     long countByUser(User user);
 }

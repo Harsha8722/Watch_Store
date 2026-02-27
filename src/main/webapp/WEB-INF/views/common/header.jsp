@@ -15,6 +15,7 @@
                     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
                     rel="stylesheet">
                 <link href="<c:url value='/static/css/style.css'/>" rel="stylesheet">
+                <link rel="icon" href="/favicon.svg" type="image/svg+xml">
             </head>
 
             <body>

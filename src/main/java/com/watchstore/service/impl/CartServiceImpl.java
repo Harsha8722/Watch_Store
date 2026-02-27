@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
         Watch watch = watchRepository.findById(watchId)
                 .orElseThrow(() -> new ResourceNotFoundException("Watch not found: " + watchId));
 
-        Optional<Cart> existingCart = cartRepository.findByUserAndWatch(user, watch);
+        Optional<Cart> existingCart = cartRepository.findFirstByUserAndWatch(user, watch);
         if (existingCart.isPresent()) {
             Cart cart = existingCart.get();
             cart.setQuantity(cart.getQuantity() + quantity);

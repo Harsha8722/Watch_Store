@@ -1,4 +1,4 @@
-com\watchstore\config\DataInitializer.class
+com\watchstore\controller\AdminController.class
 com\watchstore\service\OrderService.class
 com\watchstore\controller\WatchController.class
 com\watchstore\controller\WishlistController.class
@@ -36,6 +36,7 @@ com\watchstore\config\WebMvcConfig.class
 com\watchstore\entity\Watch.class
 com\watchstore\entity\Wishlist.class
 com\watchstore\config\SecurityConfig.class
+com\watchstore\api\CartApiController.class
 com\watchstore\WatchStoreApplication.class
 com\watchstore\entity\OrderItem.class
 com\watchstore\repository\WishlistRepository.class
@@ -48,7 +49,6 @@ com\watchstore\repository\WatchRepository.class
 com\watchstore\repository\OrderRepository.class
 com\watchstore\exception\ResourceNotFoundException.class
 com\watchstore\entity\User.class
-com\watchstore\controller\admin\AdminController.class
 com\watchstore\controller\ReviewController.class
 com\watchstore\service\EmailService.class
 com\watchstore\service\impl\CartServiceImpl.class

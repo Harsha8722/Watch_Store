@@ -31,6 +31,9 @@ public class CartController {
 
     @GetMapping
     public String viewCart(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
         User user = getUser(userDetails);
         List<Cart> cartItems = cartService.getCartItems(user);
         BigDecimal total = cartItems.stream()
@@ -47,6 +50,9 @@ public class CartController {
                             @RequestParam(defaultValue = "1") int quantity,
                             @AuthenticationPrincipal UserDetails userDetails,
                             RedirectAttributes redirectAttributes) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
         User user = getUser(userDetails);
         cartService.addToCart(user, watchId, quantity);
         redirectAttributes.addFlashAttribute("success", "Watch added to cart!");
@@ -57,6 +63,9 @@ public class CartController {
     public String updateQuantity(@PathVariable Long cartId,
                                  @RequestParam int quantity,
                                  @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
         User user = getUser(userDetails);
         cartService.updateQuantity(user, cartId, quantity);
         return "redirect:/cart";
@@ -66,6 +75,9 @@ public class CartController {
     public String removeFromCart(@PathVariable Long cartId,
                                  @AuthenticationPrincipal UserDetails userDetails,
                                  RedirectAttributes redirectAttributes) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
         User user = getUser(userDetails);
         cartService.removeFromCart(user, cartId);
         redirectAttributes.addFlashAttribute("success", "Item removed from cart.");

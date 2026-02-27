@@ -109,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Order> findById(Long id) {
-        return orderRepository.findById(id);
+        return orderRepository.findByIdWithItems(id);
     }
 
     @Override

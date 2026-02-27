@@ -2,16 +2,37 @@
 
 A high-end, modern e-commerce platform for luxury timepieces built with **Spring Boot 3**, **Java 17+,** **JSP**, and **Bootstrap 5**.
 
+<p align="center">
+  <img src="screen%20shots/HomePage.png" alt="WatchStore Home Page" width="800"/>
+</p>
+
 ## ✨ Features
 
 - **Luxury User Interface**: Minimalist gold-on-black theme with glassmorphism effects and smooth animations.
-- **Dark/Light Mode**: Full support for theme switching.
+- **Dark/Light Mode**: Full support for theme switching with zero transition glitching.
 - **User Authentication**: Secure Login/Registration with Role-Based Access Control (RBAC).
 - **Product Management**: Browse by categories (Luxury, Sports, Casual, Smartwatch), search, and filter.
 - **Shopping Experience**: Add to cart, wishlist, and seamless checkout flow.
 - **Order Tracking**: Detailed order history and status tracking for users.
 - **Admin Dashboard**: Comprehensive management of products, orders, and users.
 - **REST API Support**: Built-in Swagger/OpenAPI documentation.
+
+## 📸 Showcase
+
+### Admin Dashboard (Dark Mode)
+<p align="center">
+  <img src="screen%20shots/AdminDashboard.png" alt="Admin Dashboard" width="800"/>
+</p>
+
+### Feature Collection
+<p align="center">
+  <img src="screen%20shots/Feature%20collection.png" alt="Feature Collection" width="800"/>
+</p>
+
+### Shopping Cart
+<p align="center">
+  <img src="screen%20shots/cart.png" alt="Shopping Cart" width="800"/>
+</p>
 
 ## 🛠️ Technology Stack
 
@@ -47,11 +68,6 @@ mvn clean spring-boot:run
 ```
 
 The application will be available at [http://localhost:8080](http://localhost:8080).
-
-### Demo Credentials
-
-- **Admin**: `admin@watchstore.com` / `admin123`
-- **User**: `user@watchstore.com` / `user123`
 
 ## 📖 API Documentation
 

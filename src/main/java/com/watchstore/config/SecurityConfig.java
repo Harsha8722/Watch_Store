@@ -60,9 +60,10 @@ public class SecurityConfig {
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(auth -> auth
                 .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.FORWARD, jakarta.servlet.DispatcherType.ERROR, jakarta.servlet.DispatcherType.INCLUDE).permitAll()
-                .requestMatchers("/", "/watches", "/watches/**", "/api/**",
-                        "/register", "/login", "/static/**", "/uploads/**",
-                        "/error", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/", "/actuator/health", "/actuator/**",
+        "/watches", "/watches/**", "/api/**",
+        "/register", "/login", "/static/**", "/uploads/**",
+        "/error", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/profile/**", "/cart/**", "/orders/**",
                         "/checkout/**", "/wishlist/**", "/reviews/**").authenticated()

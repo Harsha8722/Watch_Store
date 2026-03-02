@@ -14,7 +14,7 @@
     <groupId>com.watchstore</groupId>
     <artifactId>watch-store</artifactId>
     <version>1.0.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>Watch Store E-Commerce</name>
     <description>Premium E-Commerce Watch Store Application</description>
 
@@ -35,11 +35,7 @@
         <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-tomcat</artifactId>
-    <scope>provided</scope>
-</dependency>
+       
 
         <!-- Spring MVC + JSP (Tomcat Jasper) -->
         <dependency>
